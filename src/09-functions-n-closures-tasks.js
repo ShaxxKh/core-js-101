@@ -23,7 +23,11 @@
  *   getComposition(Math.sin, Math.asin)(x) => Math.sin(Math.asin(x))
  *
  */
-function getComposition(/* f, g */) {
+function getComposition(f, g) {
+  function asd() {
+    return f(g());
+  }
+  return asd;
 }
 
 
@@ -82,8 +86,17 @@ function getPolynom() {
  *   ...
  *   memoizer() => the same random number  (next run, returns the previous cached result)
  */
-function memoize(/* func */) {
-  throw new Error('Not implemented');
+function memoize(func) {
+  return function asd(...args) {
+    const key = JSON.stringify(args);
+    const fun = func;
+    fun.memory = fun.memory || {};
+    if (fun.memory[key]) {
+      return fun.memory[key];
+    }
+    fun.memory[key] = func(...args);
+    return fun.memory[key];
+  };
 }
 
 
@@ -170,8 +183,15 @@ function partialUsingArguments(/* fn, ...args1 */) {
  *   getId4() => 7
  *   getId10() => 11
  */
-function getIdGeneratorFunction(/* startFrom */) {
-  throw new Error('Not implemented');
+function getIdGeneratorFunction(startFrom) {
+  return function asd() {
+    if (asd.memory === undefined) {
+      asd.memory = startFrom;
+      return asd.memory;
+    }
+    asd.memory += 1;
+    return asd.memory;
+  };
 }
 
 
